@@ -1,0 +1,23 @@
+uuid: 6017de80-14c6-4e91-96e6-d91495f43828
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ud_book_setup
+  module:
+    - node
+id: node.field_ud_online_readers
+field_name: field_ud_online_readers
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

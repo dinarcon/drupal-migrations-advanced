@@ -1,0 +1,51 @@
+id:ud_debug_example
+label: 'Non-working migration for debugging purposes'
+source:
+  constants:
+    HTML_PREFIX: '<strong>Value:</strong>'
+  plugin: embedded_data
+  data_rows:
+    -
+      unique_id: 1
+      name: 'Pi'
+      value: 3.1415
+    -
+      unique_id: 2
+      name: 'Euler''s number'
+      value: 2.7182
+    -
+      unique_id: 3
+      name: 'Root 2'
+      value: 1.4142
+  ids:
+    unique_id:
+      type: integer
+process:
+  title:
+    plugin: callback
+    source: name
+    callback: strtoupper
+
+  pseudo_number_components:
+    plugin: explode
+    source: value
+
+  pseudo_comma_delimited:
+    plugin: concat
+    source: pseudo_number_components
+    delimiter: ,
+
+  body/value:
+    plugin: concat
+    source:
+      - constants/HTML_PREFIX
+      - '@pseudo_comma_delimited'
+      delimiter: ' '
+  body/format:
+    plugin: default_value
+    default_value: basic_html
+
+destination:
+  plugin: 'entity:node'
+  default_bundle: page
+  validate: true

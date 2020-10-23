@@ -1,0 +1,26 @@
+uuid: bec51979-9178-4c3c-82d9-1abcd44c7fc7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ud_online_readers
+    - node.type.ud_book
+  enforced:
+    module:
+      - ud_book_setup
+id: node.ud_book.field_ud_online_readers
+field_name: field_ud_online_readers
+entity_type: node
+bundle: ud_book
+label: 'Online readers'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

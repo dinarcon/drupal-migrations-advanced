@@ -1,0 +1,11 @@
+uuid: e32da828-c011-4405-963a-db5393479122
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ud_book_setup
+name: 'Book topics'
+vid: ud_book_topics
+description: 'Example vocabulary for the <a href="https://udrupal.com/migrations"><strong>Understand Drupal Migrations Course</strong></a>.'
+weight: 0

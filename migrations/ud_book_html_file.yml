@@ -1,0 +1,73 @@
+id: ud_book_html_file
+label: 'Import files from HTML'
+
+migration_tags:
+  - UD HTML Source
+  - UD Migrations Advanced Example
+
+source:
+  constants:
+    SOURCE_DOMAIN: 'https://udrupal.com'
+    DRUPAL_UD_BOOK_FILES_DIRECTORY: 'public://ud-course-files/advanced'
+    FILE_STATUS_PERMANENT: 1
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: html5
+
+  urls:
+    - modules/custom/ud_book/sources/html_fragments/1.html
+    - modules/custom/ud_book/sources/html_fragments/2.html
+    - modules/custom/ud_book/sources/html_fragments/3.html
+
+  # XPath-like selector. The slash (/) at the beginning is optional.
+  item_selector: '/'
+  fields:
+    - name: src_unique_id
+      label: 'Unique ID'
+      selector: '//img[1]/@data-entity-uuid'
+    - name: src_image_source
+      label: 'Image source'
+      selector: '//img[1]/@src'
+
+  ids:
+    src_unique_id:
+      type: string
+
+process:
+  pseudo_source_full_path:
+    plugin: concat
+    source:
+      - constants/SOURCE_DOMAIN
+      - src_image_source
+
+  pseudo_destination_filename:
+    - plugin: callback
+      source: '@pseudo_source_full_path'
+      callable: basename
+    - plugin: transliteration
+    - plugin: skip_on_empty
+      method: row
+      message: 'Cannot import missing image URL.'
+
+  pseudo_destination_full_path:
+    plugin: concat
+    source:
+      - constants/DRUPAL_UD_BOOK_FILES_DIRECTORY
+      - '@pseudo_destination_filename'
+    delimiter: /
+
+  uri:
+    plugin: download
+    source:
+      - '@pseudo_source_full_path'
+      - '@pseudo_destination_full_path'
+    file_exists: 'use existing'
+
+  status: constants/FILE_STATUS_PERMANENT
+
+destination:
+  plugin: 'entity:file'
+  validate: true
+
+migration_dependencies: null

@@ -1,0 +1,52 @@
+id: ud_book_json_auth_node
+label: 'Import page nodes from (remote) JSON'
+
+migration_tags:
+  - UD JSON Source
+  - UD Migrations Advanced Example
+
+source:
+  track_changes: true
+
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  urls:
+    - https://www.omdbapi.com/?s=lego&type=movie&r=json
+
+  item_selector: /Search
+  fields:
+    - name: src_unique_id
+      label: 'Unique ID'
+      selector: imdbID
+    - name: src_title
+      label: 'Name'
+      selector: Title
+    - name: src_year
+      label: 'Year'
+      selector: Year
+    - name: src_custom
+      label: 'Custom'
+      selector: Custom
+
+  ids:
+    src_unique_id:
+      type: string
+
+process:
+  title:
+    - plugin: callback
+      source:
+        - src_title
+        - src_year
+        - src_custom
+      callable: array_filter
+    - plugin: concat
+      delimiter: ' - '
+
+destination:
+  plugin: 'entity:node'
+  default_bundle: page
+  validate: true
+
+migration_dependencies: null

@@ -1,0 +1,35 @@
+uuid: 0ca774b2-6a36-411f-ad81-d4bbc59f1d80
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ud_book.field_ud_abstract
+    - field.field.node.ud_book.field_ud_author
+    - field.field.node.ud_book.field_ud_cover
+    - field.field.node.ud_book.field_ud_downloads
+    - field.field.node.ud_book.field_ud_online_readers
+    - field.field.node.ud_book.field_ud_topics
+    - node.type.ud_book
+  enforced:
+    module:
+      - ud_book_setup
+  module:
+    - user
+id: node.ud_book.teaser
+targetEntityType: node
+bundle: ud_book
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_ud_abstract: true
+  field_ud_author: true
+  field_ud_cover: true
+  field_ud_downloads: true
+  field_ud_online_readers: true
+  field_ud_topics: true

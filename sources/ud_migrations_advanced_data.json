@@ -1,0 +1,33 @@
+{
+  "data": {
+    "udm_books": [
+      {
+        "unique_id": 1,
+        "title": "Drupal Migrations",
+        "description": "<p>\n  <strong>Author:</strong>\n  Mauricio\n</p>\n<img\n  alt=\"Drupal migrations book cover\"\n  data-align=\"right\"\n  data-caption=\"Get the book\"\n  data-entity-type=\"file\"\n  data-entity-uuid=\"4f270ee5-bb9e-4b37-b18b-c33bd548fc7e\"\n  src=\"/files/sample/book/migrations.png\"\n/>\n<p>This book covers Migrate API concepts for Drupal 8/9 and beyond.</p>\n<p>The examples include how to migrate from different sources into different destination entities. There are tips on planning migration projects and debugging errors.</p>\n<p>\n  <strong>Topics:</strong>\n  <a href=\"/tags/drupal\">drupal</a>,\n  <a href=\"/tags/migrations\">migrations</a>\n</p>\n",
+        "statistics": {
+          "online_readers": 0,
+          "downloads": 0
+        }
+      },
+      {
+        "unique_id": 2,
+        "title": "Drupal Upgrades",
+        "description": "<p>\n  <strong>Author:</strong>\n  Wendy, Mauricio\n</p>\n<img\n  alt=\"Drupal upgrades book cover\"\n  data-align=\"right\"\n  data-caption=\"Get the book\"\n  data-entity-type=\"file\"\n  data-entity-uuid=\"530927d5-b37c-4ac2-92e7-42282b449305\"\n  src=\"/files/sample/book/upgrades.png\"\n/>\n<p>Learn to use the Migrate API to upgrade your Drupal 6/7 site to Drupal 8/9.</p>\n<p>The examples include how to perform changes in site architecture between the sites and tips on troubleshooting issues.</p>\n<p>\n  <strong>Topics:</strong>\n  <a href=\"/tags/drupal\">drupal</a>,\n  <a href=\"/tags/migrations\">upgrades</a>\n</p>\n",
+        "statistics": {
+          "online_readers": 0,
+          "downloads": 0
+        }
+      },
+      {
+        "unique_id": 3,
+        "title": "React.js Fundamentals",
+        "description": "<p>\n  <strong>Author:</strong>\n  Mary, Carlos\n</p>\n<img\n  alt=\"React.js fundamentals book cover\"\n  data-align=\"right\"\n  data-caption=\"Get the book\"\n  data-entity-type=\"file\"\n  data-entity-uuid=\"4e04d144-d502-48e0-9c47-ce3ae9c90be4\"\n  src=\"/files/sample/book/react.png\"\n/>\n<p>This book explains the basic concepts of ReactJS progressively.</p>\n<p>You will learn how to convert a static site into a dynamic application.</p>\n<p>The examples make use of the Hooks API.</p>\n<p>\n  <strong>Topics:</strong>\n  <a href=\"/tags/drupal\">reactjs</a>,\n  <a href=\"/tags/migrations\">hooks</a>,\n  <a href=\"/tags/migrations\">routing</a>,\n  <a href=\"/tags/form-validation\">form validation</a>\n</p>\n",
+        "statistics": {
+          "online_readers": 0,
+          "downloads": 0
+        }
+      }
+    ]
+  }
+}

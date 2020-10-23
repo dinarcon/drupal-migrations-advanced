@@ -1,0 +1,30 @@
+{
+  "name": "drupal/ud_book",
+  "description": "Example for the Understand Drupal Migrations Course.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://understanddrupal.com/migrations",
+  "authors": [
+    {
+        "name": "Mauricio Dinarte",
+        "homepage":"https://www.drupal.org/u/dinarcon",
+        "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/dinarcon/drupal-migrations-advanced",
+    "issues": "https://github.com/dinarcon/drupal-migrations-advanced/issues"
+  },
+  "require": {
+    "drupal/core": "^8 | ^9",
+    "drupal/metatag": "^1.14",
+    "drupal/migrate_plus": "^5.1",
+    "drupal/migrate_tools": "^5.0",
+    "drupal/paragraphs": "^1.12"
+  },
+  "suggest": {
+    "drupal/migrate_devel": "Provide development tools for migrations.",
+    "drush/drush": "Execute commands provided by migrate_tools."
+  },
+  "minimum-stability": "dev"
+}

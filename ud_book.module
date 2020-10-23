@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Implements migrations hooks.
+ */
+
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Url;
+use Drupal\migrate\Plugin\MigrateSourceInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Row;
+
+/**
+ * Implements hook_migrate_MIGRATION_ID_prepare_row().
+ */
+function ud_book_migrate_ud_book_json_node_prepare_row(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
+  // $row->setSourceProperty('src_title', 'Overridden title');
+  $row->setSourceProperty('src_stats_online_readers', rand(1, 100));
+  $row->setSourceProperty('src_stats_downloads', rand(1, 100));
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function ud_book_migration_plugins_alter(array &$migrations) {
+  if (isset($migrations['ud_book_json_auth_node'])) {
+    foreach ($migrations['ud_book_json_auth_node']['source']['urls'] as $index => $url) {
+      $apikey = \Drupal::config('ud_book.settings')->get('apikey');
+      $migrations['ud_book_json_auth_node']['source']['urls'][$index] = ud_book_attach_apikey($url, $apikey);
+    }
+  }
+}
+
+/**
+ * Appends an apikey to a URL as query string parameter.
+ *
+ * @param $url
+ *   The base URL to append the apikey as a query string parameter.
+ * @param $apikey
+ *   The apikey value.
+ *
+ * @return string
+ */
+function ud_book_attach_apikey($url, $apikey) {
+  $parts = UrlHelper::parse($url);
+  return Url::fromUri(
+    $parts['path'],
+    [
+      'query' => $parts['query'] + ['apikey' => $apikey],
+      'fragment' => $parts['fragment'],
+    ]
+  )->toUriString();
+}

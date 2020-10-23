@@ -1,0 +1,79 @@
+id: ud_book_json_file
+label: 'Import files from JSON'
+
+migration_tags:
+  - UD JSON Source
+  - UD Migrations Advanced Example
+
+source:
+  constants:
+    SOURCE_DOMAIN: 'https://udrupal.com'
+    DRUPAL_UD_BOOK_FILES_DIRECTORY: 'public://ud-course-files/advanced'
+    FILE_STATUS_PERMANENT: 1
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+
+  urls:
+    - modules/custom/ud_book/sources/ud_migrations_advanced_data.json
+
+  item_selector: /data/udm_books
+  fields:
+    - name: src_unique_id
+      label: 'Unique ID'
+      selector: unique_id
+    - name: src_description
+      label: 'Description'
+      selector: description
+
+  ids:
+    src_unique_id:
+      type: integer
+
+process:
+  pseudo_image_src:
+    - plugin: dom
+      method: import
+      source: src_description
+    - plugin: dom_extract
+      xpath: '//img[1]'
+      target: 'attribute:src'
+    - plugin: array_shift
+
+  pseudo_source_full_path:
+    plugin: concat
+    source:
+      - constants/SOURCE_DOMAIN
+      - '@pseudo_image_src'
+
+  pseudo_destination_filename:
+    - plugin: callback
+      source: '@pseudo_source_full_path'
+      callable: basename
+    - plugin: transliteration
+    - plugin: skip_on_empty
+      method: row
+      message: 'Cannot import missing image URL.'
+
+  pseudo_destination_full_path:
+    plugin: concat
+    source:
+      - constants/DRUPAL_UD_BOOK_FILES_DIRECTORY
+      - '@pseudo_destination_filename'
+    delimiter: /
+
+  uri:
+    plugin: download
+    source:
+      - '@pseudo_source_full_path'
+      - '@pseudo_destination_full_path'
+    file_exists: 'use existing'
+
+  status: constants/FILE_STATUS_PERMANENT
+
+destination:
+  plugin: 'entity:file'
+  validate: true
+
+migration_dependencies: null

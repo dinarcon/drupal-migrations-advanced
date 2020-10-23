@@ -1,0 +1,23 @@
+uuid: b6152ce2-021c-4218-9884-61a1193b9333
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ud_book_setup
+  module:
+    - node
+    - taxonomy
+id: node.field_ud_topics
+field_name: field_ud_topics
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

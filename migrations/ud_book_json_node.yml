@@ -1,0 +1,110 @@
+id: ud_book_json_node
+label: 'Import book nodes from JSON'
+
+migration_tags:
+  - UD JSON Source
+  - UD Migrations Advanced Example
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+
+  urls:
+    - modules/custom/ud_book/sources/ud_migrations_advanced_data.json
+
+  item_selector: /data/udm_books
+  fields:
+    - name: src_unique_id
+      label: 'Unique ID'
+      selector: unique_id
+    - name: src_title
+      label: 'Title'
+      selector: title
+    - name: src_description
+      label: 'Description'
+      selector: description
+    - name: src_stats_online_readers
+      label: 'Online readers'
+      selector: statistics/online_readers
+    - name: src_stats_downloads
+      label: 'Downloads'
+      selector: statistics/downloads
+
+  ids:
+    src_unique_id:
+      type: integer
+
+process:
+  title: src_title
+
+  pseudo_dom_content:
+    plugin: dom
+    method: import
+    source: src_description
+
+  field_ud_author:
+    - plugin: dom_extract
+      source: '@pseudo_dom_content'
+      xpath: '//p[1]/strong/following-sibling::text()'
+    - plugin: array_shift
+    - plugin: explode
+      delimiter: ','
+    - plugin: callback
+      callable: trim
+
+#  field_ud_cover/target_id:
+#    plugin: migration_lookup
+#    migration: ud_book_json_file
+#    source: src_unique_id
+
+  field_ud_cover/target_id:
+    - plugin: dom_extract
+      source: '@pseudo_dom_content'
+      xpath: '//img[1]'
+      target: 'attribute:data-entity-uuid'
+    - plugin: array_shift
+    - plugin: migration_lookup
+      migration: ud_book_html_file
+
+  field_ud_cover/alt:
+    - plugin: dom_extract
+      source: '@pseudo_dom_content'
+      xpath: '//img[1]'
+      target: 'attribute:alt'
+    - plugin: array_shift
+
+  field_ud_abstract:
+    - plugin: dom_extract
+      source: '@pseudo_dom_content'
+      xpath: '//p[position()>1 and position()<last()]'
+    - plugin: concat
+      delimiter: "\r\n\r\n"
+
+  field_ud_topics:
+    - plugin: dom_extract
+      source: '@pseudo_dom_content'
+      xpath: '//p[last()]/a'
+    - plugin: multiple_values
+    - plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: ud_book_topics
+
+  field_ud_online_readers: src_stats_online_readers
+  field_ud_downloads: src_stats_downloads
+
+destination:
+  plugin: 'entity:node'
+  default_bundle: ud_book
+  validate: true
+  overwrite_properties:
+    - field_ud_online_readers
+    - field_ud_downloads
+
+migration_dependencies:
+  required:
+    - ud_book_html_file
+    # - ud_book_json_file
+  optional: []

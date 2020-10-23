@@ -1,0 +1,26 @@
+uuid: a49fae10-fc30-4149-bdb5-92c03e4bbe0e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ud_downloads
+    - node.type.ud_book
+  enforced:
+    module:
+      - ud_book_setup
+id: node.ud_book.field_ud_downloads
+field_name: field_ud_downloads
+entity_type: node
+bundle: ud_book
+label: Downloads
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

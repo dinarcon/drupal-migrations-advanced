@@ -1,0 +1,32 @@
+uuid: 77786f40-98cd-40a7-8101-dfb8fd014b6b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ud_topics
+    - node.type.ud_book
+    - taxonomy.vocabulary.ud_book_topics
+  enforced:
+    module:
+      - ud_book_setup
+id: node.ud_book.field_ud_topics
+field_name: field_ud_topics
+entity_type: node
+bundle: ud_book
+label: Topics
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ud_book_topics: ud_book_topics
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference
