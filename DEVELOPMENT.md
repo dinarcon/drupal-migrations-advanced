@@ -8,43 +8,45 @@ Drupal core comes with a [quick-start command](https://www.drupal.org/docs/insta
 
 These instructions also use the [recommended-project composer template](https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates) for installing Drupal 9. This setup assumes you have [Composer](https://getcomposer.org/) installed. To run Drupal 9 with this set you need to meet the following [minimum requirements](https://www.drupal.org/docs/understanding-drupal/how-drupal-9-was-made-and-what-is-included/environment-requirements-of):
 
-- PHP 7.3. Check with this command: `php --version`
-- SQLite 3.26. Check with this command: `sqlite3 --version`
-- Drush 10 for running the migrations. Check with this command: `./vendor/bin/drush --version`
+* PHP 7.3. Check with this command: `php --version`
+* SQLite 3.26. Check with this command: `sqlite3 --version`
+* Drush **10.3.x** for running the migrations. Check with this command: `./vendor/bin/drush --version`
+
+Drush `10.4` and later is not compatible with `migrate_tools <= 5`. Until a `6.x` branch is released for `migrate_tools`, Drush needs to be pinned to `^10.3.0` via Composer.
 
 ```
 # Get Drupal 9 via composer.
-composer create-project drupal/recommended-project:^9.0.0 migrations-advanced
+composer create-project drupal/recommended-project:^9.1 migrations-advanced
 
 # If you get memory limit errors when running composer, prepend the command with
 # COMPOSER_MEMORY_LIMIT=-1
 # More information at https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors
-COMPOSER_MEMORY_LIMIT=-1 composer create-project drupal/recommended-project:^9.0.0 migrations-advanced
+COMPOSER_MEMORY_LIMIT=-1 composer create-project drupal/recommended-project:^9.1 migrations-advanced
 
 # Change directory.
 cd migrations-advanced
 
-# Add Olivero. This will not be necessary starting in Drupal 9.1.
-composer require 'drupal/olivero:^1.0'
-
 # Add Drush.
-composer require 'drush/drush'
+composer require 'drush/drush:^10.3.0'
 
 # Add contrib modules.
 composer require 'drupal/migrate_plus:^5.1' 'drupal/migrate_tools:^5.0' 'drupal/migrate_source_html:^1.0' 'drupal/migrate_devel:^2.0@alpha'
 
 # At the time of publication, some patches are needed for the migrate_plus and migrate_tools modules.
-# The following 3 commands are only needed until this issue is resolved:
+# The following 4 commands are only needed until this issue is resolved:
 # https://www.drupal.org/node/3112559
 # https://www.drupal.org/node/3117216
 # https://www.drupal.org/node/3117485
 
 # Add ability to patch modules.
-composer require 'cweagans/composer-patches'
+composer require 'cweagans/composer-patches:^1.7'
 
 # Edit composer.json file per instructions in patching migrate_tools module
 # section.
 vim composer.json
+
+# Validate composer.json file.
+composer validate
 
 # Apply the patch.
 composer install
@@ -69,24 +71,26 @@ cd web/modules/custom && wget https://github.com/dinarcon/drupal-migrations-adva
 # the same command again to restart the development server.
 php web/core/scripts/drupal quick-start standard --site-name "UnderstandDrupal.com/migrations" --suppress-login
 
-# Enable the modules.
-./vendor/bin/drush pm:enable --yes ud_book ud_book_setup migrate migrate_plus migrate_tools migrate_source_html migrate_devel
-
-# Set Olivero as the default (frontend) theme.
-drush theme:enable olivero && drush --yes config:set olivero.settings debug 0 && drush --yes config:set system.theme default olivero
-
 # Set Claro as the admin theme.
-drush theme:enable claro && drush --yes config:set system.theme admin claro
+./vendor/bin/drush theme:enable claro && ./vendor/bin/drush --yes config:set system.theme admin claro
+
+# Set Olivero as the default (frontend) theme. If using Drupal 8.9, install it via Composer: composer require 'drupal/olivero:^1.0@beta'
+./vendor/bin/drush theme:enable olivero && ./vendor/bin/drush --yes config:set system.theme default olivero
+
+# Enable the modules.
+./vendor/bin/drush pm:enable --yes ud_book migrate_devel
 
 # Import content.
 ./vendor/bin/drush migrate:import --tag='UD Migrations Advanced Example'
 
-# Check the imported content at /ud-courses
+# Check the imported content at /ud-books
 # See TROUBLESHOOTING.md if there are any issues.
 
 # Rollback content.
 ./vendor/bin/drush migrate:rollback --tag='UD Migrations Advanced Example'
 
+# Uninstall example module. This removes the included configuration: content type, fields, taxonomy vocabulary, view, etc.
+./vendor/bin/drush pm:uninstall --yes ud_book ud_book_setup
 ```
 
 If you are using a different development environment, make sure to meet Drupal's [system requirements](https://www.drupal.org/docs/system-requirements).

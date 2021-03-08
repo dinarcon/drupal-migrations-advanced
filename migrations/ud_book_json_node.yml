@@ -107,4 +107,4 @@ migration_dependencies:
   required:
     - ud_book_html_file
     # - ud_book_json_file
-  optional: []
+  optional: { }

@@ -49,4 +49,6 @@ destination:
   default_bundle: page
   validate: true
 
-migration_dependencies: null
+migration_dependencies:
+  required: { }
+  optional: { }

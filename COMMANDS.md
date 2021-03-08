@@ -3,11 +3,11 @@
 This is a list of some commands used throughout the course.
 
 ```
-COMPOSER_MEMORY_LIMIT=-1 composer create-project drupal/recommended-project:^9.0.0 migrations-advanced
+COMPOSER_MEMORY_LIMIT=-1 composer create-project drupal/recommended-project:^9.1 migrations-advanced
 
 cd migrations-advanced
 
-COMPOSER_MEMORY_LIMIT=-1 composer require 'drupal/olivero:^1.0' 'drush/drush' 'drupal/migrate_plus:^5.1' 'drupal/migrate_tools:^5.0' 'drupal/migrate_source_html:^1.0' 'drupal/devel:^4.0' 'drupal/migrate_devel:^2.0@alpha' 'cweagans/composer-patches'
+COMPOSER_MEMORY_LIMIT=-1 composer require 'drush/drush:^10.3.0' 'drupal/migrate_plus:^5.1' 'drupal/migrate_tools:^5.0' 'drupal/migrate_source_html:^1.0' 'drupal/devel:^4.1' 'drupal/migrate_devel:^2.0@alpha' 'cweagans/composer-patches:^1.7'
 
 vim composer.json
 
@@ -23,9 +23,9 @@ cd web/modules/custom && git clone https://github.com/dinarcon/drupal-migrations
 
 php web/core/scripts/drupal quick-start standard --site-name "UnderstandDrupal.com/migrations" --suppress-login
 
-./vendor/bin/drush theme:enable olivero && ./vendor/bin/drush --yes config:set olivero.settings debug 0 && ./vendor/bin/drush --yes config:set system.theme default olivero
-
 ./vendor/bin/drush theme:enable claro && ./vendor/bin/drush --yes config:set system.theme admin claro
+
+./vendor/bin/drush theme:enable olivero && ./vendor/bin/drush --yes config:set system.theme default olivero
 
 ./vendor/bin/drush pm:enable --yes ud_book migrate_devel
 

@@ -4,15 +4,12 @@ description: Example configuration for the Understand Drupal Migrations Course. 
 package: UnderstandDrupal.com
 core: 8.x
 core_version_requirement: ^8 || ^9
-hidden: 1
 dependencies:
+  - drupal:field
+  - drupal:file
   - drupal:image
   - drupal:link
-  - drupal:migrate
   - drupal:options
   - drupal:taxonomy
   - drupal:text
   - drupal:views
-  - migrate_plus:migrate_plus
-  - migrate_source_html:migrate_source_html
-  - migrate_tools:migrate_tools

@@ -8,15 +8,19 @@ This module is part of the [Understand Drupal Migrations Course](https://underst
 
 The following projects are required to run this demo. The numbers indicate which version of the project was last used for testing.
 
-* [Drupal](https://www.drupal.org/project/drupal) 9.0.7
-* [Drush](https://github.com/drush-ops/drush) 10.3.5
+* [Drupal](https://www.drupal.org/project/drupal) 9.1.5
 * [Migrate plus](https://www.drupal.org/project/migrate_plus) 8.x-5.1
 * [Migrate source HTML](https://www.drupal.org/project/migrate_source_html) 1.0.0
 * [Migrate tools](https://www.drupal.org/project/migrate_tools) 8.x-5.0
+* [Drush](https://github.com/drush-ops/drush) 10.3.6
 
 Although not required to run the example migrations, the following module is used in the debugging lessons:
 
 * [Migrate devel](https://www.drupal.org/project/migrate_devel) 8.x-2.0-alpha2
+
+### Specific Drush version required
+
+Drush `10.4` and later is not compatible with `migrate_tools <= 5`. Until a `6.x` branch is released for `migrate_tools`, Drush needs to be pinned to `^10.3.0` via Composer.
 
 ## Examples
 
@@ -30,7 +34,7 @@ This demo includes eight migrations. All of them use a JSON file as the source.
 ## Instructions
 
 * Install module dependencies via Composer: `composer require 'drupal/migrate_devel:^2.0@alpha' 'drupal/migrate_plus:^5.1' 'drupal/migrate_source_html:^1.0' 'drupal/migrate_tools:^5.0'`
-* Install the latest version of Drush via Composer: `composer require 'drush/drush'`. After this step, you may call it via `./vendor/bin/drush`.
+* Install the **Drush 10.3.x** via Composer: `composer require 'drush/drush:^10.3.0'`. After this step, you may call it via `./vendor/bin/drush`.
 * Make sure your Drupal installation has a `/modules/custom` folder. The `modules` folder should exist, but the `custom` sub-folder might not. Create it if needed.
 * Download the demo module contained in this repository into the `/modules/custom` folder. You can do this by cloning this repository or [downloading a ZIP file](https://github.com/dinarcon/drupal-migrations-advanced/archive/main.zip). **Important:** In either case, you need to rename the folder to `ud_book`. Otherwise, the migrations will not find the JSON file used as source data.
 * Enable the *UD Book Example Migration* (`ud_book`) module.
